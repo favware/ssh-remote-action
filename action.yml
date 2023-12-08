@@ -26,8 +26,11 @@ inputs:
 runs:
   using: composite
   steps:
+    - id: fetch-script
+      run: curl -o script.sh https://raw.githubusercontent.com/favware/ssh-remote-action/main/ssh-remote-action.sh &>/dev/null && chmod +x script.sh
+      shell: bash
     - id: ssh-remote-command
-      run: ./ssh-remote-action.sh
+      run: ./script.sh
       shell: bash
       env:
         SSH_HOST: ${{ inputs.host }}
