@@ -32,6 +32,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
           username: ${{ secrets.SSH_USERNAME }}
           command: ${{ secrets.SSH_COMMAND }}
 ```
