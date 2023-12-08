@@ -59,7 +59,7 @@ runs:
         SSH_PORT=${SSH_PORT:-22}
 
         # Define the default SSH arguments that apply for both key and password flows
-        SSH_ARGS="-o StrictHostKeyChecking=no -p ${SSH_PORT} ${SSH_USERNAME}@${SSH_HOST} \"${SSH_COMMAND}\""
+        SSH_ARGS="-o StrictHostKeyChecking=no -p ${SSH_PORT} ${SSH_USERNAME}@${SSH_HOST}"
 
         eval "$(ssh-agent -s)"
 
@@ -88,12 +88,12 @@ runs:
             fi
 
             # Execute the SSH command
-            ssh ${SSH_ARGS}
+            ssh ${SSH_ARGS} "${SSH_COMMAND}"
 
         elif [ -n "${SSH_PASSWORD}" ]; then
 
             # Execute the SSH command
-            sshpass -p "${SSH_PASSWORD}" ssh ${SSH_ARGS}
+            sshpass -p "${SSH_PASSWORD}" ssh ${SSH_ARGS} "${SSH_COMMAND}"
 
         else
             echo "Neither inputs.key nor inputs.password are set. Exiting..."
