@@ -41,6 +41,7 @@ if [ -n "${SSH_KEY}" ]; then
     else
         # Create a script that will echo the passphrase
         printf "%s\n" "#!/usr/bin/env bash" "echo ${SSH_KEY_PASSPHRASE}" > ./ssh-passphrase
+        chmod +x ./ssh-passphrase
 
         # Set the permissions
         DISPLAY=1 SSH_ASKPASS="./ssh-passphrase" ssh-add ./private.key < /dev/null
