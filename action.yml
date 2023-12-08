@@ -64,6 +64,7 @@ runs:
         eval "$(ssh-agent -s)"
 
         if [ -n "${SSH_KEY}" ]; then
+            echo "Using SSH key..."
 
             # Write the private key to a file
             echo "${SSH_KEY}" > ./private.key
@@ -73,9 +74,11 @@ runs:
 
             # Check if the SSH_KEY_PASSPHRASE is empty
             if [ -z "${SSH_KEY_PASSPHRASE}" ]; then
+                echo "SSH Key Passphrase is empty, just adding the key to the SSH agent..."
                 # Add the private key to the SSH agent
                 ssh-add ./private.key < /dev/null
             else
+                echo "SSH Key Passphrase is set, creating a script to echo the passphrase and adding the key to the SSH agent..."
                 # Create a script that will echo the passphrase
                 printf "%s\n" "#!/usr/bin/env bash" "echo ${SSH_KEY_PASSPHRASE}" > ./ssh-passphrase
                 chmod +x ./ssh-passphrase
