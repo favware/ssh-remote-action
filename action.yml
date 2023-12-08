@@ -1,0 +1,39 @@
+name: SSH Remote Command Action
+description: Executes a provided command on a remote SSH server using a private key or password.
+author: favware
+
+branding:
+  icon: terminal
+  color: gray-dark
+
+inputs:
+  host:
+    description: SSH host address (i.e. the IP address of the server)
+  port:
+    description: SSH port number
+    default: '22'
+  key:
+    description: Content of the SSH private key. For example, the raw content of ~/.ssh/id_rsa.
+  passphrase:
+    description: Passphrase for the SSH key (only used if "key" is provided)
+  username:
+    description: SSH username
+  password:
+    description: SSH password (ignored if "key" is provided)
+  command:
+    description: Commands to be executed.
+
+runs:
+  using: composite
+  steps:
+    - id: ssh-remote-command
+      run: ssh-remote-action.sh
+      shell: bash
+      env:
+        SSH_HOST: ${{ inputs.host }}
+        SSH_PORT: ${{ inputs.port }}
+        SSH_KEY: ${{ inputs.key }}
+        SSH_KEY_PASSPHRASE: ${{ inputs.passphrase }}
+        SSH_USERNAME: ${{ inputs.username }}
+        SSH_PASSWORD: ${{ inputs.password }}
+        SSH_COMMAND: ${{ inputs.command }}
