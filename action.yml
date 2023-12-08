@@ -27,7 +27,7 @@ runs:
   using: composite
   steps:
     - id: ssh-remote-command
-      run: ssh-remote-action.sh
+      run: ./ssh-remote-action.sh
       shell: bash
       env:
         SSH_HOST: ${{ inputs.host }}
