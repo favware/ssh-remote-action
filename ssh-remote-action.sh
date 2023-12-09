@@ -22,9 +22,10 @@ fi
 SSH_PORT=${SSH_PORT:-22}
 
 # Define the default SSH arguments that apply for both key and password flows
-SSH_ARGS="-o StrictHostKeyChecking=no -p ${SSH_PORT} ${SSH_USERNAME}@${SSH_HOST}"
+SSH_ARGS="-o StrictHostKeyChecking=no -o LogLevel=ERROR -p ${SSH_PORT} ${SSH_USERNAME}@${SSH_HOST}"
 
-eval "$(ssh-agent -s)"
+eval "$(ssh-agent -s)" &>/dev/null
+echo "SSH Agent started"
 
 if [ -n "${SSH_KEY}" ]; then
     echo "Using SSH key..."
@@ -39,7 +40,7 @@ if [ -n "${SSH_KEY}" ]; then
     if [ -z "${SSH_KEY_PASSPHRASE}" ]; then
         echo "SSH Key Passphrase is empty, just adding the key to the SSH agent..."
         # Add the private key to the SSH agent
-        ssh-add ./private.key > /dev/null
+        ssh-add -q ./private.key &>/dev/null
         echo "SSH Identity Added"
     else
         echo "SSH Key Passphrase is set, creating a script to echo the passphrase and adding the key to the SSH agent..."
@@ -48,7 +49,7 @@ if [ -n "${SSH_KEY}" ]; then
         chmod +x ./ssh-passphrase
 
         # Set the permissions
-        DISPLAY=1 SSH_ASKPASS="./ssh-passphrase" ssh-add ./private.key > /dev/null
+        DISPLAY=1 SSH_ASKPASS="./ssh-passphrase" ssh-add -q ./private.key &>/dev/null
         echo "SSH Identity Added"
     fi
 
