@@ -1,7 +1,9 @@
 # SSH Remote Action
 
-SSH Remote Action (ssh-remote-action) is a GitHub action for executing a SSH command on a remote server.
-An example use case of this action is deploying your application on your remote server after publishing a new release through another GitHub workflow job.
+SSH Remote Action (ssh-remote-action) is a GitHub action for executing a SSH
+command on a remote server. An example use case of this action is deploying your
+application on your remote server after publishing a new release through another
+GitHub workflow job.
 
 ## Usage
 
