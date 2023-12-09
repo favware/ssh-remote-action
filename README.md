@@ -38,3 +38,21 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           command: ${{ secrets.SSH_COMMAND }}
 ```
+
+### Ensuring that the output from the command is not printed to the logs
+
+You may not want the output of the SSH logs to be printed to the GitHub action
+logs. To achieve this you can provide the `silent` input with value of `true`.
+This will take your `command` and transform it to:
+
+```sh
+sh -c '${{ inputs.command }}' > /dev/null 2>&1
+```
+
+Alternatively you can also provide this directly to your SSH command, in that
+case make sure you do NOT set `silent` to true. For example if we want to call a
+script called `deploy.sh` the syntax is:
+
+```sh
+sh -c '/path/to/deploy.sh' > /dev/null 2>&1
+```

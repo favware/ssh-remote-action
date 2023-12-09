@@ -54,7 +54,7 @@ if [ -n "${SSH_KEY}" ]; then
 
     if [ "${SILENT}" == "true" ]; then
         echo "Executing the SSH command silently..."
-        ssh ${SSH_ARGS} "${SSH_COMMAND}" > /dev/null
+        ssh ${SSH_ARGS} "sh -c '${SSH_COMMAND}' > /dev/null 2>&1"
     else
         echo "Executing the SSH command..."
         ssh ${SSH_ARGS} "${SSH_COMMAND}"
@@ -67,7 +67,7 @@ elif [ -n "${SSH_PASSWORD}" ]; then
     # Execute the SSH command
     if [ "${SILENT}" == "true" ]; then
         echo "Executing the SSH command silently..."
-        sshpass -p "${SSH_PASSWORD}" ssh ${SSH_ARGS} "${SSH_COMMAND}" > /dev/null
+        sshpass -p "${SSH_PASSWORD}" ssh ${SSH_ARGS} "sh -c '${SSH_COMMAND}' > /dev/null 2>&1"
     else
         echo "Executing the SSH command..."
         sshpass -p "${SSH_PASSWORD}" ssh ${SSH_ARGS} "${SSH_COMMAND}"
